@@ -1,5 +1,8 @@
 # CHANGELOG
 
+**v7.1.4-dev**
+* (android) bugfix: on Android <=12, the camera permission status always return GRANTED because READ_EXTERNAL_STORAGE or WRITE_EXTERNAL_STORAGE are GRANTED.
+
 **v7.1.4**
 * (android) bugfix: decide if a permission is implicitly granted by checking if the device runtime is less than, but the build SDK used for the app is greater is or equal than, the SDK version in which the permission was added.
   * Resolves [#508](https://github.com/dpa99c/cordova-diagnostic-plugin/issues/508)

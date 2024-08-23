@@ -54,6 +54,11 @@ var Diagnostic_Camera = (function(){
         return count;
     }
 
+    function getAndroidVersion(ua) {
+        ua = (ua || navigator.userAgent).toLowerCase();
+        var match = ua.match(/android\s([0-9\.]*)/i);
+        return match ? match[1] : undefined;
+    }
 
     /*****************************
      *
@@ -153,7 +158,11 @@ var Diagnostic_Camera = (function(){
 
         params.successCallback = params.successCallback || function(){};
         var onSuccess = function(statuses){
-            params.successCallback(numberOfKeys(statuses) > 1 ? cordova.plugins.diagnostic._combinePermissionStatuses(statuses): statuses[Diagnostic.permission.CAMERA]);
+            if( parseInt(getAndroidVersion(), 10) >= 13){
+                params.successCallback(numberOfKeys(statuses) > 1 ? cordova.plugins.diagnostic._combinePermissionStatuses(statuses): statuses[Diagnostic.permission.CAMERA]);
+            } else{
+                params.successCallback(statuses[Diagnostic.permission.CAMERA]);
+            }
         };
 
         return cordova.exec(onSuccess,
